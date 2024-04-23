@@ -1,0 +1,4 @@
+# Tailwind CSS
+/node_modules
+/tailwind.config.js
+/.cache
