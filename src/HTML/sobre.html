@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../CSS/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet">
+    <title>Projeto de Quiz de Lógica Formal</title>
+</head>
+<body class="bg-blue-100 text-blue-900">
+    <header>
+        <h1 class="bg-blue-300 text-blue-50 text-center font-extrabold text-5xl p-7">Projeto de Quiz de Lógica Formal</h1>
+        <div class="grid grid-cols-3 gap-3 pt-5">
+            <div></div>
+            <div>
+            <button onclick="question()" class="col-span-1 w-full shadow-lg shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200">
+                Começar Quiz!
+            </button>
+        </div>
+        <div></div>
+        </div>
+    </header>
+    <div class="grid grid-cols-4 gap-4 pt-5">
+        <div></div>
+        <div class="shadow-blue-200 shadow-xl rounded-lg p-5 col-span-2">
+            <h2 class="text-center font-extrabold text-2xl py-3">Visão Geral</h2>
+            <p>O projeto de Quiz de Lógica Formal é uma iniciativa para promover o entendimento e a prática da lógica formal por meio de perguntas interativas.</p>
+            
+            <h2 class="text-center font-extrabold text-2xl py-3">Objetivo</h2>
+            <p>O objetivo principal deste projeto é ajudar os usuários a melhorar suas habilidades em lógica formal de uma forma divertida e educativa.</p>
+            
+            <h2 class="text-center font-extrabold text-2xl py-3">Recursos</h2>
+            <ul>
+                <li>Uma variedade de perguntas sobre lógica formal, incluindo proposições, quantificadores, inferência lógica, entre outros tópicos.</li>
+                <li>Feedback imediato sobre as respostas, com explicações para ajudar na compreensão.</li>
+                <li>Interface amigável e intuitiva.</li>
+                <li>Possibilidade de acompanhar o progresso e comparar resultados com outros usuários (opcional).</li>
+            </ul>
+            
+            <h2 class="text-center font-extrabold text-2xl py-3">Como Utilizar</h2>
+            <p>Para utilizar o Quiz de Lógica Formal, basta acessar a página e começar a responder as perguntas. Você receberá feedback imediato após cada resposta.</p>
+            
+            <h2 class="text-center font-extrabold text-2xl py-3">Contribuições</h2>
+            <p>Este projeto é de código aberto. Se você tiver sugestões de melhorias ou quiser contribuir com novas perguntas, fique à vontade para entrar em contato conosco ou enviar um pull request no repositório do GitHub.</p>
+            
+            <h2 class="text-center font-extrabold text-2xl py-3">Contato</h2>
+            <p>Para mais informações ou dúvidas, entre em contato pelo e-mail: projetomatch@email.com</p>
+        </div>
+        <div></div>
+    </div>
+</body>
+<script>
+        function question(){
+        window.location.assign("./perguntas.html");
+    }
+</script>
+</html>
