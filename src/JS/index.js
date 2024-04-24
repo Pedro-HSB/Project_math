@@ -1,83 +1,28 @@
-// const $startGameButton = document.querySelector(".start-quiz")
-// const $nextQuestionButton = document.querySelector(".next-question")
-// const $questionsContainer = document.querySelector(".questions-container")
 let $question = document.getElementById("question")
 const $answersContainer = document.querySelector(".answers-container")
-const $answers = document.querySelectorAll(".answer")
-let $answerTest = document.getElementById("answerTest")
+let $opt1 = document.getElementById("answerTest1") // aparece variable not defined
+let $opt2 = document.getElementById("answer2") // aparece variable not defined
+let $opt3 = document.getElementById("answer3") // aparece variable not defined
+let $opt4 = document.getElementById("answer4") // aparece variable not defined
+let $opt5 = document.getElementById("answer5") // aparece variable not defined
 
 let currentQuestionIndex = 0
 let totalCorrect = 0
 
-// displayNextQuestion()
-
-// $startGameButton.addEventListener("click", startGame)
-// $nextQuestionButton.addEventListener("click", displayNextQuestion)
-
-// function startGame() {
-//   $startGameButton.classList.add("hide")
-//   $questionsContainer.classList.remove("hide")
-//   displayNextQuestion()
-// }
-
-// function displayNextQuestion() {
-//   resetState()
-  
-//   if (questions.length === currentQuestionIndex) {
-//     return finishGame()
-//   }
-
-//   $question"Text"."text"Content = questions[currentQuestionIndex].question
-//   questions[currentQuestionIndex].answers.forEach(answer => {
-//     const newAsnwer = document.createElement("button")
-//     newAsnwer.classList.add("button", "answer")
-//     newAsnwer."text"Content = answer."text"
-//     if (answer.correct) {
-//       newAsnwer.dataset.correct = answer.correct
-//     }
-//     $answersContainer.appendChild(newAsnwer)
-
-//     newAsnwer.addEventListener("click", selectAnswer)
-//   })
-// }
-
-// function resetState() {
-//   while($answersContainer.firstChild) {
-//     $answersContainer.removeChild($answersContainer.firstChild)
-//   }
-
-//   document.body.removeAttribute("class")
-//   // $nextQuestionButton.classList.add("hide")
-// }
-
-// function selectAnswer(event) {
-//   const answerClicked = event.target
-
-//   if (answerClicked.dataset.correct) {
-//     document.body.classList.add("correct")
-//     totalCorrect++
-//   } else {
-//     document.body.classList.add("incorrect") 
-//   }
-
-//   document.querySelectorAll(".answer").forEach(button => {
-//     button.disabled = true
-
-//     if (button.dataset.correct) {
-//       button.classList.add("correct")
-//     } else {
-//       button.classList.add("incorrect")
-//     }
-//   })
-  
-//   $nextQuestionButton.classList.remove("hide")
-//   currentQuestionIndex++
-// }
+let second = 0;
+let millisecond = 0;
+let cron;
+let qts = 0;
+let ans = 0;
+// Variáveis para armazenar as questões e opções
+let questionTexts = [];
+let answerOptions = [];
+start()
 
 function finishGame() {
   const totalQuestions = questions.length
   const performance = Math.floor(totalCorrect * 100 / totalQuestions)
-  
+
   let message = ""
 
   switch (true) {
@@ -94,8 +39,8 @@ function finishGame() {
       message = "Pode melhorar :("
   }
 
-  $questionsContainer.innerHTML = 
-  `
+  $questionsContainer.innerHTML =
+    `
     <p class="final-message">
       Você acertou ${totalCorrect} de ${totalQuestions} questões!
       <span>Resultado: ${message}</span>
@@ -113,7 +58,7 @@ const questions = [
   {
     "question": "Dentro de qual elemento HTML colocamos o JavaScript?",
     "answers": [
-      { "op1": "<javascript>", "correct": false },
+      { "text": "<javascript>", "correct": false },
       { "text": "<js>", "correct": false },
       { "text": "<script>", "correct": true },
       { "text": "<scripting>", "correct": false }
@@ -173,36 +118,43 @@ const questions = [
   },
 ]
 
-let second = 0;
-let millisecond = 0;
-let cron;
-let qts = 1
-start()
-
 function start() {
-  cron = setInterval(() => { time(); }, 10);
+    cron = setInterval(() => { time(); }, 3000);
 }
 
-function pause(){
+function pause() {
   clearInterval(cron);
 }
 
 function time() {
-  if ((millisecond += 10) == 1000) {
-    millisecond = 0;
-    second++;
-  }
-  if (second == 3) {// esse 3 e apenas para teste
-    second = 0;
-    qts += 1
-    $question.innerHTML = questions[qts]["question"]
-//estou tentando percorrer o objeto answers
-    $answerTest.innerHTML = questions[qts]["answers"]
+  let certo = false
+  let question = questions[qts];
 
-    if(qts == 3){
-      $question.innerHTML = "Quiz finalizado"
-      pause()
-      return ;
-    }
+  // Exibir a resposta atual
+  let answer = question.answers[ans];
+  certo = answer.correct
+
+  opt1.innerHTML = `<p>${answer.text[0]}</p>`;
+  opt2.innerHTML = `<p>${answer.text[1]}</p>`;
+  opt3.innerHTML = `<p>${answer.text[2]}</p>`;
+  opt4.innerHTML = `<p>${answer.text[3]}</p>`;
+  opt5.innerHTML = `<p>${answer.text[4]}</p>`;
+  // Atualizar para a próxima resposta
+  ans++;
+
+  // Verificar se todas as respostas da pergunta foram exibidas
+  if (ans >= question.answers.length) {
+    // Reiniciar o índice da resposta para a próxima pergunta
+    ans = 0;
+    // Atualizar para a próxima pergunta
+    qts++;
+  }
+
+  // Verificar se todas as perguntas foram exibidas
+  if (qts >= questions.length) {
+    // Todas as perguntas foram exibidas
+    $question.innerHTML = "Quiz finalizado";
+    pause(); // Chamada de função para pausar o tempo, se necessário
+    return;
   }
 }
