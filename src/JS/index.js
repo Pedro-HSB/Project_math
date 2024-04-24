@@ -192,11 +192,12 @@ function time() {
     millisecond = 0;
     second++;
   }
-  if (second == 3) {
+  if (second == 3) {// esse 3 e apenas para teste
     second = 0;
     qts += 1
     $question.innerHTML = questions[qts]["question"]
-    $answerTest.innerHTML = questions[qts]["answers"].map
+//estou tentando percorrer o objeto answers
+    $answerTest.innerHTML = questions[qts]["answers"]
 
     if(qts == 3){
       $question.innerHTML = "Quiz finalizado"
