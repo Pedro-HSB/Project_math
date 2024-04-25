@@ -29,8 +29,6 @@ Execute o seguinte comando para instalar as dependências do projeto:
 
 Em seguida, execute o seguinte comando para compilar os estilos do Tailwind CSS:
 
-lua
-
     npx tailwindcss build styles.css -o output.css
 
 Abra o arquivo index.html em um navegador da web compatível.
@@ -41,9 +39,7 @@ Após responder todas as perguntas, será exibido o seu desempenho final.
 
 Se você estiver trabalhando em um ambiente de desenvolvimento, pode usar o comando npx tailwindcss build com a opção --watch para assistir a alterações nos arquivos CSS e compilar automaticamente:
 
-lua
-
-npx tailwindcss build styles.css -o output.css --watch
+    npx tailwindcss build styles.css -o output.css --watch
 
 Isso garantirá que suas alterações no código Tailwind sejam refletidas automaticamente no projeto.
 
