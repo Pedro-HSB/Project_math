@@ -1,7 +1,3 @@
-Claro, aqui está um README básico para o seu projeto Project_math:
-
----
-
 # Project_math
 
 ## Descrição
