@@ -17,31 +17,31 @@ Project_math é um projeto de lógica formal desenvolvido para proporcionar um a
 
 ## Instalação e Uso
 
-Clone este repositório para o seu ambiente local.
+- Clone este repositório para o seu ambiente local.
 
-Certifique-se de ter o Node.js instalado em sua máquina. Se não tiver, você pode baixá-lo e instalá-lo em nodejs.org.
+- Certifique-se de ter o Node.js instalado em sua máquina. Se não tiver, você pode baixá-lo e instalá-lo em nodejs.org.
 
-No terminal, navegue até o diretório do projeto.
+- No terminal, navegue até o diretório do projeto.
 
-Execute o seguinte comando para instalar as dependências do projeto:
+- Execute o seguinte comando para instalar as dependências do projeto:
 
-    npm install
+        npm install
 
-Em seguida, execute o seguinte comando para compilar os estilos do Tailwind CSS:
+- Em seguida, execute o seguinte comando para compilar os estilos do Tailwind CSS:
 
-    npx tailwindcss build styles.css -o output.css
+        npx tailwindcss build styles.css -o output.css
 
-Abra o arquivo index.html em um navegador da web compatível.
+- Abra o arquivo index.html em um navegador da web compatível.
 
-Responda às perguntas do quiz clicando nas opções fornecidas.
+- Responda às perguntas do quiz clicando nas opções fornecidas.
 
-Após responder todas as perguntas, será exibido o seu desempenho final.
+- Após responder todas as perguntas, será exibido o seu desempenho final.
 
-Se você estiver trabalhando em um ambiente de desenvolvimento, pode usar o comando npx tailwindcss build com a opção --watch para assistir a alterações nos arquivos CSS e compilar automaticamente:
+- Se você estiver trabalhando em um ambiente de desenvolvimento, pode usar o comando npx tailwindcss build com a opção --watch para assistir a alterações nos arquivos CSS e compilar automaticamente:
 
-    npx tailwindcss build styles.css -o output.css --watch
+        npx tailwindcss build styles.css -o output.css --watch
 
-Isso garantirá que suas alterações no código Tailwind sejam refletidas automaticamente no projeto.
+- Isso garantirá que suas alterações no código Tailwind sejam refletidas automaticamente no projeto.
 
 ## Contribuição
 Contribuições são bem-vindas! Sinta-se à vontade para enviar sugestões, relatar problemas ou propor melhorias através das issues deste repositório.
