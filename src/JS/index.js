@@ -1,10 +1,11 @@
 let $question = document.getElementById("question")
 const $answersContainer = document.querySelector(".answers-container")
-let $opt1 = document.getElementById("answerTest1") // aparece variable not defined
-let $opt2 = document.getElementById("answer2") // aparece variable not defined
-let $opt3 = document.getElementById("answer3") // aparece variable not defined
-let $opt4 = document.getElementById("answer4") // aparece variable not defined
-let $opt5 = document.getElementById("answer5") // aparece variable not defined
+let $answerTest = document.getElementById("answerTest") 
+let $opt1 = document.getElementById("opt1") 
+let $opt2 = document.getElementById("opt2") 
+let $opt3 = document.getElementById("opt3") 
+let $opt4 = document.getElementById("opt4") 
+let $opt5 = document.getElementById("opt5") 
 
 let currentQuestionIndex = 0
 let totalCorrect = 0
@@ -56,67 +57,106 @@ function finishGame() {
 
 const questions = [
   {
-    "question": "Dentro de qual elemento HTML colocamos o JavaScript?",
+    "question": "Qual dos seguintes não é um operador lógico?",
     "answers": [
-      { "text": "<javascript>", "correct": false },
-      { "text": "<js>", "correct": false },
-      { "text": "<script>", "correct": true },
-      { "text": "<scripting>", "correct": false }
+      { "text": "&&", "correct": false },
+      { "text": "||", "correct": false },
+      { "text": "!", "correct": false },
+      { "text": "?", "correct": true },
+      { "text": "&", "correct": false }
     ]
   },
   {
-    "question": "Onde é o lugar correto para inserir JavaScript?",
+    "question": "Qual é o resultado de !(3 > 2 && 4 < 7)?",
     "answers": [
-      { "text": "Tanto no <head> quanto no <body> está correto", "correct": true },
-      { "text": "No <body>", "correct": false },
-      { "text": "No <head>", "correct": false },
-      { "text": "Em outro lugar", "correct": false }
+      { "text": "true", "correct": false },
+      { "text": "false", "correct": true },
+      { "text": "3", "correct": false },
+      { "text": "2", "correct": false },
+      { "text": "0", "correct": false }
     ]
   },
   {
-    "question": 'Qual é a sintaxe correta para se referir a um script externo chamado "xxx.js"',
+    "question": "Qual é a negação de 'Eu gosto de sorvete'?",
     "answers": [
-      { "text": '<script src="xxx.js">', "correct": true },
-      { "text": '<script href="xxx.js">', "correct": false },
-      { "text": '<script name="xxx.js">', "correct": false },
+      { "text": "Eu não gosto de sorvete", "correct": true },
+      { "text": "Eu como sorvete", "correct": false },
+      { "text": "Eu adoro sorvete", "correct": false },
+      { "text": "Eu detesto sorvete", "correct": false },
+      { "text": "Eu quero sorvete", "correct": false }
+    ]
+  },
+  {
+    "question": "Qual é o símbolo lógico para 'OU'?",
+    "answers": [
+      { "text": "&&", "correct": false },
+      { "text": "!", "correct": false },
+      { "text": "||", "correct": true },
+      { "text": "&", "correct": false },
+      { "text": "^", "correct": false }
+    ]
+  },
+  {
+    "question": "O que o operador '===' faz em JavaScript?",
+    "answers": [
+      { "text": "Verifica a igualdade de valor e tipo", "correct": true },
+      { "text": "Verifica apenas a igualdade de valor", "correct": false },
+      { "text": "Verifica apenas a igualdade de tipo", "correct": false },
+      { "text": "Não faz nada", "correct": false },
+      { "text": "Inverte o valor", "correct": false }
+    ]
+  },
+  {
+    "question": "O que a função 'parseInt()' faz em JavaScript?",
+    "answers": [
+      { "text": "Converte uma string em um número inteiro", "correct": true },
+      { "text": "Arredonda um número para o inteiro mais próximo", "correct": false },
+      { "text": "Converte um número em uma string", "correct": false },
+      { "text": "Retorna o valor absoluto de um número", "correct": false },
       { "text": "Nenhuma das alternativas", "correct": false }
     ]
   },
   {
-    "question": 'O arquivo JavaScript externo deve conter a tag <script>',
+    "question": "Qual é o operador de comparação que não verifica o tipo?",
     "answers": [
-      { "text": "Verdadeiro", "correct": false },
-      { "text": "Falso", "correct": true }
+      { "text": "==", "correct": true },
+      { "text": "===", "correct": false },
+      { "text": "!=", "correct": false },
+      { "text": "!==", "correct": false },
+      { "text": ">=", "correct": false }
     ]
   },
   {
-    "question": 'Como escrever "Hello World" numa caixa de alerta?',
+    "question": "Qual é o resultado da expressão 5 * 0?",
     "answers": [
-      { "text": 'msg("Hello World");', "correct": false },
-      { "text": 'alert("Hello World");', "correct": true },
-      { "text": 'msgBox("Hello World");', "correct": false },
-      { "text": 'alertBox("Hello World");', "correct": false }
+      { "text": "0", "correct": true },
+      { "text": "5", "correct": false },
+      { "text": "1", "correct": false },
+      { "text": "10", "correct": false },
+      { "text": "25", "correct": false }
     ]
   },
   {
-    "question": 'Como podemos criar uma função no JavaScript?',
+    "question": "Qual é a função do operador 'typeof' em JavaScript?",
     "answers": [
-      { "text": 'function:myFunction()', "correct": false },
-      { "text": 'function myFunction()', "correct": true },
-      { "text": 'function = myFunction()', "correct": false },
-      { "text": 'Nenhum desses códigos criaria uma função', "correct": false }
+      { "text": "Retorna o tipo de uma variável", "correct": true },
+      { "text": "Converte o tipo de uma variável", "correct": false },
+      { "text": "Compara dois tipos de variáveis", "correct": false },
+      { "text": "Define o tipo de uma variável", "correct": false },
+      { "text": "Nenhuma das alternativas", "correct": false }
     ]
   },
   {
-    "question": 'Como podemos chamar uma função chamada "minhaFuncao"?',
+    "question": "Qual é o resultado de 10 % 3?",
     "answers": [
-      { "text": 'call minhaFuncao()', "correct": false },
-      { "text": 'call function minhaFuncao()', "correct": false },
-      { "text": 'Nenhum desses códigos chamaria essa função', "correct": false },
-      { "text": 'minhaFuncao()', "correct": true },
+      { "text": "3", "correct": false },
+      { "text": "0.3", "correct": false },
+      { "text": "1", "correct": true },
+      { "text": "10", "correct": false },
+      { "text": "2", "correct": false }
     ]
-  },
-]
+  }
+];
 
 function start() {
     cron = setInterval(() => { time(); }, 3000);
@@ -134,12 +174,18 @@ function time() {
   let answer = question.answers[ans];
   certo = answer.correct
 
-  opt1.innerHTML = `<p>${answer.text[0]}</p>`;
-  opt2.innerHTML = `<p>${answer.text[1]}</p>`;
-  opt3.innerHTML = `<p>${answer.text[2]}</p>`;
-  opt4.innerHTML = `<p>${answer.text[3]}</p>`;
-  opt5.innerHTML = `<p>${answer.text[4]}</p>`;
-  // Atualizar para a próxima resposta
+  opt1.innerHTML = `${answer.text[qts]}`;//esta pegando so uma letra e nao a frase toda
+  opt2.innerHTML = `${answer.text[qts+1]}`;//esta pegando so uma letra e nao a frase toda
+  opt3.innerHTML = `${answer.text[qts+2]}`;//esta pegando so uma letra e nao a frase toda
+  opt4.innerHTML = `${answer.text[qts]}`;//esta pegando so uma letra e nao a frase toda
+  opt5.innerHTML = `${answer.text[qts]}`;//esta pegando so uma letra e nao a frase toda
+
+console.log(answer.text[0])
+console.log(answer.text[1])
+console.log(answer.text[2])
+console.log(answer.text[3])
+console.log(answer.text[4])
+  // Atualizar para a próxima respost
   ans++;
 
   // Verificar se todas as respostas da pergunta foram exibidas
