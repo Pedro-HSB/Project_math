@@ -55,152 +55,203 @@ function finishGame() {
   `
 }
 
-const questions = [
-  {
-    "question": "Qual dos seguintes não é um operador lógico?",
-    "answers": [
-      { "text": "&&", "correct": false },
-      { "text": "||", "correct": false },
-      { "text": "!", "correct": false },
-      { "text": "?", "correct": true },
-      { "text": "&", "correct": false }
-    ]
-  },
-  {
-    "question": "Qual é o resultado de !(3 > 2 && 4 < 7)?",
-    "answers": [
-      { "text": "true", "correct": false },
-      { "text": "false", "correct": true },
-      { "text": "3", "correct": false },
-      { "text": "2", "correct": false },
-      { "text": "0", "correct": false }
-    ]
-  },
-  {
-    "question": "Qual é a negação de 'Eu gosto de sorvete'?",
-    "answers": [
-      { "text": "Eu não gosto de sorvete", "correct": true },
-      { "text": "Eu como sorvete", "correct": false },
-      { "text": "Eu adoro sorvete", "correct": false },
-      { "text": "Eu detesto sorvete", "correct": false },
-      { "text": "Eu quero sorvete", "correct": false }
-    ]
-  },
-  {
-    "question": "Qual é o símbolo lógico para 'OU'?",
-    "answers": [
-      { "text": "&&", "correct": false },
-      { "text": "!", "correct": false },
-      { "text": "||", "correct": true },
-      { "text": "&", "correct": false },
-      { "text": "^", "correct": false }
-    ]
-  },
-  {
-    "question": "O que o operador '===' faz em JavaScript?",
-    "answers": [
-      { "text": "Verifica a igualdade de valor e tipo", "correct": true },
-      { "text": "Verifica apenas a igualdade de valor", "correct": false },
-      { "text": "Verifica apenas a igualdade de tipo", "correct": false },
-      { "text": "Não faz nada", "correct": false },
-      { "text": "Inverte o valor", "correct": false }
-    ]
-  },
-  {
-    "question": "O que a função 'parseInt()' faz em JavaScript?",
-    "answers": [
-      { "text": "Converte uma string em um número inteiro", "correct": true },
-      { "text": "Arredonda um número para o inteiro mais próximo", "correct": false },
-      { "text": "Converte um número em uma string", "correct": false },
-      { "text": "Retorna o valor absoluto de um número", "correct": false },
-      { "text": "Nenhuma das alternativas", "correct": false }
-    ]
-  },
-  {
-    "question": "Qual é o operador de comparação que não verifica o tipo?",
-    "answers": [
-      { "text": "==", "correct": true },
-      { "text": "===", "correct": false },
-      { "text": "!=", "correct": false },
-      { "text": "!==", "correct": false },
-      { "text": ">=", "correct": false }
-    ]
-  },
-  {
-    "question": "Qual é o resultado da expressão 5 * 0?",
-    "answers": [
-      { "text": "0", "correct": true },
-      { "text": "5", "correct": false },
-      { "text": "1", "correct": false },
-      { "text": "10", "correct": false },
-      { "text": "25", "correct": false }
-    ]
-  },
-  {
-    "question": "Qual é a função do operador 'typeof' em JavaScript?",
-    "answers": [
-      { "text": "Retorna o tipo de uma variável", "correct": true },
-      { "text": "Converte o tipo de uma variável", "correct": false },
-      { "text": "Compara dois tipos de variáveis", "correct": false },
-      { "text": "Define o tipo de uma variável", "correct": false },
-      { "text": "Nenhuma das alternativas", "correct": false }
-    ]
-  },
-  {
-    "question": "Qual é o resultado de 10 % 3?",
-    "answers": [
-      { "text": "3", "correct": false },
-      { "text": "0.3", "correct": false },
-      { "text": "1", "correct": true },
-      { "text": "10", "correct": false },
-      { "text": "2", "correct": false }
-    ]
-  }
-];
-
 function start() {
-    cron = setInterval(() => { time(); }, 3000);
+  displayNextQuestion();
 }
 
-function pause() {
-  clearInterval(cron);
-}
+function displayNextQuestion() {
+  const questionContainer = document.getElementById('question');
+  const answersContainer = document.getElementById('answers');
 
-function time() {
-  let certo = false
-  let question = questions[qts];
+  // Exibe a próxima pergunta
+  questionContainer.textContent = questions[currentQuestionIndex].question;
 
-  // Exibir a resposta atual
-  let answer = question.answers[ans];
-  certo = answer.correct
+  // Limpa as respostas anteriores
+  answersContainer.innerHTML = '';
 
-  opt1.innerHTML = `${answer.text[qts]}`;//esta pegando so uma letra e nao a frase toda
-  opt2.innerHTML = `${answer.text[qts+1]}`;//esta pegando so uma letra e nao a frase toda
-  opt3.innerHTML = `${answer.text[qts+2]}`;//esta pegando so uma letra e nao a frase toda
-  opt4.innerHTML = `${answer.text[qts]}`;//esta pegando so uma letra e nao a frase toda
-  opt5.innerHTML = `${answer.text[qts]}`;//esta pegando so uma letra e nao a frase toda
-
-console.log(answer.text[0])
-console.log(answer.text[1])
-console.log(answer.text[2])
-console.log(answer.text[3])
-console.log(answer.text[4])
-  // Atualizar para a próxima respost
-  ans++;
-
-  // Verificar se todas as respostas da pergunta foram exibidas
-  if (ans >= question.answers.length) {
-    // Reiniciar o índice da resposta para a próxima pergunta
-    ans = 0;
-    // Atualizar para a próxima pergunta
-    qts++;
+  // Exibe as opções de resposta para a pergunta atual
+  for (const answer of questions[currentQuestionIndex].answers) {
+    const answerElement = document.createElement('div');
+    answerElement.textContent = answer.opt;
+    answerElement.classList.add('option');
+    answerElement.addEventListener('click', () => {
+      // Adicione aqui a lógica para verificar se a resposta está correta
+      // Por exemplo, você pode comparar answer.correct com a resposta do usuário
+      console.log('Resposta selecionada:', answer.opt);
+    });
+    answersContainer.appendChild(answerElement);
   }
 
-  // Verificar se todas as perguntas foram exibidas
-  if (qts >= questions.length) {
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex < questions.length) {
+    setTimeout(displayNextQuestion, 3000); // Mostra a próxima pergunta após 3 segundos
+  } else {
     // Todas as perguntas foram exibidas
-    $question.innerHTML = "Quiz finalizado";
-    pause(); // Chamada de função para pausar o tempo, se necessário
-    return;
+    console.log('Fim do questionário.');
   }
+}
+
+
+// function start() {
+//     cron = setInterval(() => { time(); }, 3000);
+//     pause();
+// return;
+// }
+
+// function pause() {
+//   clearInterval(cron);
+// }
+
+// function showQuestions(){
+//   for (const question of questions) {
+//     question.innerHTML = question.question
+//     console.log(question.question)
+//   }
+
+// }
+
+// function showAnswers() {
+//   for (const question of questions) {
+//     for (const answer of question.answers) {
+//       $opt1.innerHTML = answer.opt
+//       console.log(answer.opt)
+//     }
+//   }
+//   pause();
+// return;
+// }
+
+// function time() {
+
+//   setInterval(() => { showQuestions(); }, 3000);
+
+//   setInterval(() => { showAnswers(); }, 3000);
+
+//   pause();
+// return;
+  // let certo = false
+  
+  // ans++;
+
+  // // Verificar se todas as respostas da pergunta foram exibidas
+  // if (ans >= question.answers.length) {
+  //   // Reiniciar o índice da resposta para a próxima pergunta
+  //   ans = 0;
+  //   // Atualizar para a próxima pergunta
+  //   qts++;
+  // }
+
+  // // Verificar se todas as perguntas foram exibidas
+  // if (qts >= questions.length) {
+  //   // Todas as perguntas foram exibidas
+  //   $question.innerHTML = "Quiz finalizado";
+  //   pause(); // Chamada de função para pausar o tempo, se necessário
+  //   return;
+  // }
+//}
+
+function perguntas(){
+  const questions = [
+    {
+      "question": "Qual dos seguintes não é um operador lógico?",
+      "answers": [
+        { "opt": "&&", "correct": false },
+        { "opt": "||", "correct": false },
+        { "opt": "!", "correct": false },
+        { "opt": "?", "correct": true },
+        { "opt": "&", "correct": false }
+      ]
+    },
+    {
+      "question": "Qual é o resultado de !(3 > 2 && 4 < 7)?",
+      "answers": [
+        { "opt": "true", "correct": false },
+        { "opt": "false", "correct": true },
+        { "opt": "3", "correct": false },
+        { "opt": "2", "correct": false },
+        { "opt": "0", "correct": false }
+      ]
+    },
+    {
+      "question": "Qual é a negação de 'Eu gosto de sorvete'?",
+      "answers": [
+        { "opt": "Eu não gosto de sorvete", "correct": true },
+        { "opt": "Eu como sorvete", "correct": false },
+        { "opt": "Eu adoro sorvete", "correct": false },
+        { "opt": "Eu detesto sorvete", "correct": false },
+        { "opt": "Eu quero sorvete", "correct": false }
+      ]
+    },
+    {
+      "question": "Qual é o símbolo lógico para 'OU'?",
+      "answers": [
+        { "opt": "&&", "correct": false },
+        { "opt": "!", "correct": false },
+        { "opt": "||", "correct": true },
+        { "opt": "&", "correct": false },
+        { "opt": "^", "correct": false }
+      ]
+    },
+    {
+      "question": "O que o operador '===' faz em JavaScript?",
+      "answers": [
+        { "opt": "Verifica a igualdade de valor e tipo", "correct": true },
+        { "opt": "Verifica apenas a igualdade de valor", "correct": false },
+        { "opt": "Verifica apenas a igualdade de tipo", "correct": false },
+        { "opt": "Não faz nada", "correct": false },
+        { "opt": "Inverte o valor", "correct": false }
+      ]
+    },
+    {
+      "question": "O que a função 'parseInt()' faz em JavaScript?",
+      "answers": [
+        { "opt": "Converte uma string em um número inteiro", "correct": true },
+        { "opt": "Arredonda um número para o inteiro mais próximo", "correct": false },
+        { "opt": "Converte um número em uma string", "correct": false },
+        { "opt": "Retorna o valor absoluto de um número", "correct": false },
+        { "opt": "Nenhuma das alternativas", "correct": false }
+      ]
+    },
+    {
+      "question": "Qual é o operador de comparação que não verifica o tipo?",
+      "answers": [
+        { "opt": "==", "correct": true },
+        { "opt": "===", "correct": false },
+        { "opt": "!=", "correct": false },
+        { "opt": "!==", "correct": false },
+        { "opt": ">=", "correct": false }
+      ]
+    },
+    {
+      "question": "Qual é o resultado da expressão 5 * 0?",
+      "answers": [
+        { "opt": "0", "correct": true },
+        { "opt": "5", "correct": false },
+        { "opt": "1", "correct": false },
+        { "opt": "10", "correct": false },
+        { "opt": "25", "correct": false }
+      ]
+    },
+    {
+      "question": "Qual é a função do operador 'typeof' em JavaScript?",
+      "answers": [
+        { "opt": "Retorna o tipo de uma variável", "correct": true },
+        { "opt": "Converte o tipo de uma variável", "correct": false },
+        { "opt": "Compara dois tipos de variáveis", "correct": false },
+        { "opt": "Define o tipo de uma variável", "correct": false },
+        { "opt": "Nenhuma das alternativas", "correct": false }
+      ]
+    },
+    {
+      "question": "Qual é o resultado de 10 % 3?",
+      "answers": [
+        { "opt": "3", "correct": false },
+        { "opt": "0.3", "correct": false },
+        { "opt": "1", "correct": true },
+        { "opt": "10", "correct": false },
+        { "opt": "2", "correct": false }
+      ]
+    }
+  ];  
 }
