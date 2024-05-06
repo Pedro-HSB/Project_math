@@ -13,40 +13,48 @@
 </head>
 
 <body class="bg-blue-100 text-blue-900">
+  <!-- Seção de título -->
   <section>
     <div class="grid grid-cols-4 gap-4 pt-20">
       <div></div>
-      <div class=" text-center  col-span-2 bg-blue-200 rounded-lg p-3 shadow-2xl shadow-blue-50">
+      <!-- Título do quiz -->
+      <div class="text-center col-span-2 bg-blue-200 rounded-lg p-3 shadow-2xl shadow-blue-50">
         <p class="text-4xl">Quiz de Lógica Formal</p>
       </div>
       <div></div>
     </div>
   </section>
+  <!-- Seção de botões -->
   <section>
     <div class="grid grid-cols-4 gap-4 pt-28">
         <div></div>
+        <!-- Botão para começar o quiz -->
         <div>
-            <button onclick="question()" class="col-span-1 animate-bounce shadow-lg w-full shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200">
+            <button onclick="startQuiz()" class="col-span-1 animate-bounce shadow-lg w-full shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200">
                 Começar Quiz!
             </button>
         </div>
+        <!-- Botão para ver informações sobre o quiz -->
         <div>
-            <button onclick="sobre()" class="col-span-1 animate-bounce shadow-lg w-full shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200">
+            <button onclick="showAbout()" class="col-span-1 animate-bounce shadow-lg w-full shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200">
                 Sobre
             </button>
         </div>
         <div></div>
     </div>
   </section>
-</body>
 
-<script>
-    function sobre(){
-        window.location.assign( "./sobre.html");
+  <script>
+    // Função para redirecionar para a página "sobre.html"
+    function showAbout() {
+        window.location.assign("./sobre.html");
     }
-    function question(){
+
+    // Função para redirecionar para a página "perguntas.html" e começar o quiz
+    function startQuiz() {
         window.location.assign("./perguntas.html");
     }
-</script>
+  </script>
+</body>
 
 </html>

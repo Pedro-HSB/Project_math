@@ -11,35 +11,59 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
 </head>
+<style>
+  .restart :hover{
+    background-color: #dbeafe;
+        border-radius: 10px;
+        font-size: medium;
+  }
+</style>
 
-<!-- <body class="bg-blue-100 text-blue-900" onload="time()"> -->
-
-  <body class="bg-blue-100 text-blue-900" onload="perguntas()">
+<body class="bg-blue-100 text-blue-900">
   <section>
-    <div class="grid grid-cols-4 gap-4 pt-20">
-      <div></div>
-      <div id="question" class=" text-center  col-span-2 bg-blue-200 rounded-lg p-3 hover:bg-blue-200">
-        Qual é o símbolo lógico para "implicação"?
-      </div>
-      <div></div>
-      <!-- 3 -->
-    </div>
-  </section>
-  <section>
-    <div class="grid grid-rows-5 grid-flow-col gap-5">
+    <!-- Seção para exibir a pergunta -->
+    <section>
       <article>
-        <div class="ml-16 mr-16 answers-container">
-          <div class="flex flex-row shadow-lg shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(1)">A - <p id="opt1"></p></div>
-          <div class="flex flex-row shadow-lg shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(2)">B - <p id="opt2"></p></div>
-          <div class="flex flex-row shadow-lg shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(3)">C - <p id="opt3"></p></div>
-          <div class="flex flex-row shadow-lg shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(4)">D - <p id="opt4"></p></div>
-          <div class="flex flex-row shadow-lg shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(5)">E - <p id="opt5"></p></div>
+        <div class="grid grid-cols-4 gap-4 pt-20">
+          <div></div>
+          <div id="question" class="text-center col-span-2 bg-blue-200 rounded-lg p-3">
+            Se Prepare Pois Ja Vai Começar
+          </div>
+          <div></div>
         </div>
       </article>
-    </div>
-  </section>
+    </section>
 
+    <!-- Seção para exibir as opções de resposta -->
+    <section>
+      <div class="grid grid-rows-1 grid-flow-col gap-1 mt-4">
+        <article>
+          <div class="ml-16 mr-16 answers-container grid">
+            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(1)">A - <p id="opt1"></p></div>
+            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(2)">B - <p id="opt2"></p></div>
+            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(3)">C - <p id="opt3"></p></div>
+            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(4)">D - <p id="opt4"></p></div>
+            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(5)">E - <p id="opt5"></p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Seção para exibir o resultado do quiz e o botao restart -->
+    <section>
+      <article>
+        <div class="grid grid-cols-4 gap-4 mt-3 ml-16 mr-16">
+          <div id="result" class="col-span-2">
+          </div>
+          <div id="restart" class="col-span-2 hover:bg-blue-200 rounded-lg">
+          </div>
+        </div>
+      </article>
+    </section>
+  </section>
 </body>
+
+<!-- Scripts no final da página para melhorar o desempenho -->
 <script src="../JS/index.js"></script>
 
 </html>

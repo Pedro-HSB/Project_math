@@ -1,4 +1,17 @@
+// Selecionando elementos HTML
+let questionDiv = document.getElementById("question"); // Div para exibir as perguntas
+let questionsResult = document.getElementById("result"); // Div para exibir o resultado
 
+// Variáveis de controle do jogo
+let currentQuestionIndex = 0;
+let totalCorrect = 0;
+let qts = 0;
+let answered = false; // Variável para controlar se a opção já foi respondida
+
+// Iniciando o jogo
+start();
+
+// Array de perguntas e respostas
 const questions = [
   {
     "question": "Qual dos seguintes não é um operador lógico?",
@@ -102,49 +115,53 @@ const questions = [
   // }
 ];
 
-let currentQuestionIndex = 0 // ainda nao estou usando
-let totalCorrect = 0 // ainda nao estou usando
-
-let qts = 0; // essa variavel verifica a quantidade de questoes e coloca um limite
-start()
-
+// Função para finalizar o jogo
 function finishGame() {
-const totalQuestions = questions.length
-const performance = Math.floor(totalCorrect * 100 / totalQuestions)
+  let questionsResult = document.getElementById("result"); // Div para exibir o resultado
+  let questionsRestart = document.getElementById("restart"); // Div para exibir o resultado
+  const totalQuestions = questions.length;
+  const performance = Math.floor(totalCorrect * 100 / totalQuestions);
+  let message = "";
 
-let message = ""
+  // Determinando a mensagem com base no desempenho do jogador
+  switch (true) {
+    case (performance >= 90):
+      message = "Excelente :)";
+      break;
+    case (performance >= 70):
+      message = "Muito bom :)";
+      break;
+    case (performance >= 50):
+      message = "Bom";
+      break;
+    default:
+      message = "Pode melhorar :(";
+  }
 
-switch (true) {
-  case (performance >= 90):
-    message = "Excelente :)"
-    break
-  case (performance >= 70):
-    message = "Muito bom :)"
-    break
-  case (performance >= 50):
-    message = "Bom"
-    break
-  default:
-    message = "Pode melhorar :("
-}
+  // Exibindo o resultado do jogo
+  questionsResult.innerHTML =
+    `
+    <div class="text-center bg-blue-200 rounded-lg p-3">
+          
+    <p class="final-message">
+      Você acertou ${totalCorrect} de ${totalQuestions} questões!
+    <span>${message}</span>
+    </p>
+    </div>
+  `;
 
-$questionsContainer.innerHTML =
-  `
-  <p class="final-message">
-    Você acertou ${totalCorrect} de ${totalQuestions} questões!
-    <span>Resultado: ${message}</span>
-  </p>
-  <button 
-    onclick=window.location.reload() 
-    class="button"
-  >
-    Refazer teste
-  </button>
-`
-}
-
-function start() {
-  cron = setInterval(() => { time(); }, 8000);
+    // Exibindo o bt de restart do jogo
+    questionsRestart.innerHTML =
+    `
+    <div class="text-center restart bg-blue-200 rounded-lg p-3"> 
+    <button 
+      onclick=window.location.reload() 
+      class="button"
+    >
+      <p>Refazer Quiz</p>
+    </button>
+    </div>
+  `;
 }
 // function start() {
 //     cron = setTimeout(() => {
@@ -155,65 +172,69 @@ function start() {
 //     // Chama a função time imediatamente ao iniciar o jogo
 //     time();
 // }
+// Função para iniciar o jogo
+function start() {
+  cron = setInterval(() => { time(); }, 8000);
+}
 
-
+// Função para pausar o jogo
 function pause() {
-clearInterval(cron);
+  clearInterval(cron);
 }
 
+// Função para exibir as perguntas e opções de resposta
 function time() {
-let certo = false
-let question = questions[qts];
+  let questionPhrase = questions[qts];
+  questionDiv.innerHTML = questionPhrase.question;
 
-let $question = document.getElementById("question") // pego a div para atribuir as questoes
+  questionPhrase.answers.forEach((answer, index) => {
+    const optDiv = document.getElementById(`opt${index + 1}`);
+    optDiv.innerHTML = answer.text;
+  });
 
-// Exibir a pergunta atual
-$question.innerHTML = question.question;
+  qts++;
 
-// Exibir as opções de resposta
-question.answers.forEach((answer, index) => {
-  const optDiv = document.getElementById(`opt${index + 1}`);
-  optDiv.innerHTML = answer.text;
-});
-
-// Atualizar para a próxima pergunta
-qts++;
-
-// Verificar se todas as perguntas foram exibidas
-if (qts >= questions.length) {
-  final();
-  pause(); // Chamada de função para pausar o tempo, se necessário
-  return;
-}
-}
-function final(){
-  $question.innerHTML = "Quiz finalizado";
-  question.answers.forEach((answer, index) => {
-      const optDiv = document.getElementById(`opt${index + 1}`);
-      optDiv.innerHTML = "";
-    });
-}
-
-function option(opt){
-  // estou aqui
-  let question = questions[qts];
-  let optCrt = []
-
-      question.answers.forEach((answer, index) => {
-          optCrt[index] = answer.correct
-        });
-        for (let i = 0; i < optCrt.length; i++) {
-          if (optCrt[i] == true) {
-            if (opt == i ) {
-              console.log("deu bom")
-              totalCorrect++;
-              console.log(totalCorrect)
-            }
-            else {
-              for (let j = 0; j <optCrt.length; j++) {
-                  optCrt[j] = false;
-              }
-            }
-          }
+  if (qts >= questions.length) {
+    finishGame();
+    final();
+    pause();
+    return;
   }
+}
+
+// Função para finalizar o jogo quando todas as perguntas forem respondidas
+function final() {
+  let questionPhrase = questions[qts - 1]; // Subtraindo 1 de qts para acessar o índice correto
+  questionDiv.innerHTML = "Quiz finalizado";
+  questionPhrase.answers.forEach((answer, index) => {
+    const optDiv = document.getElementById(`opt${index + 1}`);
+    optDiv.innerHTML = "";
+  });
+}
+
+// Função para selecionar a opção de resposta
+function option(opt) {
+  // Verifica se a opção já foi respondida
+  if (answered) {
+    return; // Sai da função se a opção já foi respondida
+  }
+
+  let questionPhrase = questions[qts - 1];
+  let optCrt = [];
+
+  questionPhrase.answers.forEach((answer, index) => {
+    optCrt[index] = answer.correct;
+  });
+
+  if (optCrt[opt]) {
+    totalCorrect++;
+    console.log("deu bom");
+    console.log(totalCorrect);
+  }
+  else {
+    console.log("deu ruim");
+    console.log(totalCorrect);
+  }
+
+  answered = true; // Marca a opção como respondida
 }
