@@ -1,15 +1,16 @@
 // Selecionando elementos HTML
 let questionDiv = document.getElementById("question"); // Div para exibir as perguntas
 let questionsResult = document.getElementById("result"); // Div para exibir o resultado
+let countdownDiv = document.getElementById("countdown"); // Div para exibir a contagem regressiva
+let timerDiv = document.getElementById("timer"); // Div para exibir o timer de cada pergunta
 
 // Variáveis de controle do jogo
 let currentQuestionIndex = 0;
 let totalCorrect = 0;
-let qts = 0;
 let answered = false; // Variável para controlar se a opção já foi respondida
+let cron; // Variável para o cronômetro de perguntas
+let timer; // Variável para o timer de cada pergunta
 
-// Iniciando o jogo
-start();
 
 // Array de perguntas e respostas
 const questions = [
@@ -115,27 +116,76 @@ const questions = [
   // }
 ];
 
+// Função para iniciar a contagem regressiva
+function startCountdown() {
+  let countdown = 3;
+  countdownDiv.innerHTML = countdown;
+  let countdownInterval = setInterval(() => {
+    countdown--;
+    countdownDiv.innerHTML = countdown;
+    if (countdown <= 0) {
+      clearInterval(countdownInterval);
+      countdownDiv.innerHTML = "";
+      startGame();
+    }
+  }, 1000);
+}
+
+// function start() {
+//     cron = setTimeout(() => {
+//         clearInterval(cron); // Interrompe o temporizador após 120 segundos
+//         finishGame(); // Chama a função para finalizar o jogo
+//     }, 120000); // 120 segundos = 120000 milissegundos
+
+//     // Chama a função time imediatamente ao iniciar o jogo
+//     time();
+// }
+// Função para iniciar o jogo
+// Função para iniciar a contagem regressiva
+function startCountdown() {
+  let countdown = 3;
+  countdownDiv.innerHTML = countdown;
+  let countdownInterval = setInterval(() => {
+    countdown--;
+    countdownDiv.innerHTML = countdown;
+    if (countdown <= 0) {
+      clearInterval(countdownInterval);
+      countdownDiv.innerHTML = "";
+      startGame();
+    }
+  }, 1000);
+}
+
+// Iniciando o jogo com a contagem regressiva
+startCountdown();
+
 // Função para finalizar o jogo
 function finishGame() {
   let questionsResult = document.getElementById("result"); // Div para exibir o resultado
   let questionsRestart = document.getElementById("restart"); // Div para exibir o resultado
+  let questionPhrase = questions[currentQuestionIndex - 1];
   const totalQuestions = questions.length;
   const performance = Math.floor(totalCorrect * 100 / totalQuestions);
+  questionDiv.innerHTML = "Quiz finalizado";
+  questionPhrase.answers.forEach((answer, index) => {
+    const optDiv = document.getElementById(`opt${index + 1}`);
+    optDiv.innerHTML = "";
+  });
   let message = "";
 
   // Determinando a mensagem com base no desempenho do jogador
   switch (true) {
     case (performance >= 90):
-      message = "Excelente :)";
+      message = "Excelente 🎉🥳🎉";
       break;
     case (performance >= 70):
-      message = "Muito bom :)";
+      message = "Muito bom 😆🎉";
       break;
     case (performance >= 50):
-      message = "Bom";
+      message = "Bom 😁";
       break;
     default:
-      message = "Pode melhorar :(";
+      message = "Pode melhorar 😫";
   }
 
   // Exibindo o resultado do jogo
@@ -150,8 +200,8 @@ function finishGame() {
     </div>
   `;
 
-    // Exibindo o bt de restart do jogo
-    questionsRestart.innerHTML =
+  // Exibindo o bt de restart do jogo
+  questionsRestart.innerHTML =
     `
     <div class="text-center restart bg-blue-200 rounded-lg p-3"> 
     <button 
@@ -163,18 +213,10 @@ function finishGame() {
     </div>
   `;
 }
-// function start() {
-//     cron = setTimeout(() => {
-//         clearInterval(cron); // Interrompe o temporizador após 120 segundos
-//         finishGame(); // Chama a função para finalizar o jogo
-//     }, 120000); // 120 segundos = 120000 milissegundos
 
-//     // Chama a função time imediatamente ao iniciar o jogo
-//     time();
-// }
 // Função para iniciar o jogo
-function start() {
-  cron = setInterval(() => { time(); }, 8000);
+function startGame() {
+  displayQuestion();
 }
 
 // Função para pausar o jogo
@@ -182,34 +224,53 @@ function pause() {
   clearInterval(cron);
 }
 
+// Função para embaralhar um array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Embaralhando as perguntas antes de iniciar o jogo
+questions = shuffleArray(questions);
+
 // Função para exibir as perguntas e opções de resposta
-function time() {
-  let questionPhrase = questions[qts];
-  questionDiv.innerHTML = questionPhrase.question;
-
-  questionPhrase.answers.forEach((answer, index) => {
-    const optDiv = document.getElementById(`opt${index + 1}`);
-    optDiv.innerHTML = answer.text;
-  });
-
-  qts++;
-
-  if (qts >= questions.length) {
+function displayQuestion() {
+  if (currentQuestionIndex >= questions.length) {
     finishGame();
-    final();
     pause();
     return;
   }
-}
 
-// Função para finalizar o jogo quando todas as perguntas forem respondidas
-function final() {
-  let questionPhrase = questions[qts - 1]; // Subtraindo 1 de qts para acessar o índice correto
-  questionDiv.innerHTML = "Quiz finalizado";
+  // Exibe o timer para a pergunta atual
+  let timeLeft = 8;
+  timerDiv.innerHTML = timeLeft;
+  clearInterval(timer); // Limpa o timer anterior
+  timer = setInterval(() => {
+    timeLeft--;
+    timerDiv.innerHTML = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      currentQuestionIndex++; // Avança para a próxima pergunta
+      displayQuestion(); // Exibe a próxima pergunta
+    }
+  }, 1000);
+
+  let questionPhrase = questions[currentQuestionIndex];
+  questionDiv.innerHTML = questionPhrase.question;
+  questionPhrase.answers = shuffleArray(questionPhrase.answers);
   questionPhrase.answers.forEach((answer, index) => {
     const optDiv = document.getElementById(`opt${index + 1}`);
-    optDiv.innerHTML = "";
+    const option = document.getElementById(`option${index + 1}`);
+    optDiv.innerHTML = answer.text;
+    option.style.backgroundColor = ""; // Resetando a cor de fundo
+    optDiv.onclick = () => option(index + 1); // Associando a função option ao clique
   });
+
+  // Redefine a variável answered para false ao exibir uma nova pergunta
+  answered = false;
 }
 
 // Função para selecionar a opção de resposta
@@ -219,21 +280,20 @@ function option(opt) {
     return; // Sai da função se a opção já foi respondida
   }
 
-  let questionPhrase = questions[qts - 1];
+  let questionPhrase = questions[currentQuestionIndex];
   let optCrt = [];
 
   questionPhrase.answers.forEach((answer, index) => {
     optCrt[index] = answer.correct;
   });
 
-  if (optCrt[opt]) {
+  const correctIndex = optCrt.findIndex(correct => correct); // Encontra o índice da resposta correta
+  const optDiv = document.getElementById(`option${opt}`); // Incrementando opt para corrigir o índice
+  if (opt === correctIndex + 1) { // Verifica se a opção selecionada é a correta
     totalCorrect++;
-    console.log("deu bom");
-    console.log(totalCorrect);
-  }
-  else {
-    console.log("deu ruim");
-    console.log(totalCorrect);
+    optDiv.style.backgroundColor = "#32CD32"; // Verde para resposta correta
+  } else {
+    optDiv.style.backgroundColor = "rgba(255, 0, 0, 0.5)"; // Vermelho para resposta incorreta
   }
 
   answered = true; // Marca a opção como respondida

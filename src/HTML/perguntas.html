@@ -17,9 +17,26 @@
         border-radius: 10px;
         font-size: medium;
   }
+  .option {
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #000;
+  }
 </style>
 
 <body class="bg-blue-100 text-blue-900">
+  
+  <section>
+    <article>
+      <div class="grid grid-cols-4 gap-4 pt-20">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div id="timer" class="text-center bg-blue-200 rounded-lg p-3"></div>
+      </div>
+    </article>
+  </section>
   <section>
     <!-- Seção para exibir a pergunta -->
     <section>
@@ -28,6 +45,7 @@
           <div></div>
           <div id="question" class="text-center col-span-2 bg-blue-200 rounded-lg p-3">
             Se Prepare Pois Ja Vai Começar
+            <div id="countdown" class="text-center bg-blue-200 rounded-lg p-3"></div>
           </div>
           <div></div>
         </div>
@@ -39,11 +57,11 @@
       <div class="grid grid-rows-1 grid-flow-col gap-1 mt-4">
         <article>
           <div class="ml-16 mr-16 answers-container grid">
-            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(1)">A - <p id="opt1"></p></div>
-            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(2)">B - <p id="opt2"></p></div>
-            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(3)">C - <p id="opt3"></p></div>
-            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(4)">D - <p id="opt4"></p></div>
-            <div class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(5)">E - <p id="opt5"></p></div>
+            <div id="option1" class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(0)">A - <p id="opt1"></p></div>
+            <div id="option2" class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(1)">B - <p id="opt2"></p></div>
+            <div id="option3" class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(2)">C - <p id="opt3"></p></div>
+            <div id="option4" class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(3)">D - <p id="opt4"></p></div>
+            <div id="option5" class="flex flex-row shadow-lg shadow-blue-200 h-14 rounded-lg my-4 p-2 hover:bg-blue-200" onclick="option(4)">E - <p id="opt5"></p></div>
           </div>
         </article>
       </div>
@@ -55,7 +73,7 @@
         <div class="grid grid-cols-4 gap-4 mt-3 ml-16 mr-16">
           <div id="result" class="col-span-2">
           </div>
-          <div id="restart" class="col-span-2 hover:bg-blue-200 rounded-lg">
+          <div id="restart" class="col-span-2 rounded-lg">
           </div>
         </div>
       </article>
