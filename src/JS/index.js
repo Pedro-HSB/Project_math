@@ -1,18 +1,18 @@
+// Selecionando elementos HTML
+let questionDiv = document.getElementById("question"); // Div para exibir as perguntas
+let questionsResult = document.getElementById("result"); // Div para exibir o resultado
+let countdownDiv = document.getElementById("countdown"); // Div para exibir a contagem regressiva
+let timerDiv = document.getElementById("timer"); // Div para exibir o timer de cada pergunta
 
-let questionDiv = document.getElementById("question");
-let questionsResult = document.getElementById("result");
-let countdownDiv = document.getElementById("countdown");
-let timerDiv = document.getElementById("timer");
-
-
+// Variáveis de controle do jogo
 let currentQuestionIndex = 0;
 let totalCorrect = 0;
-let answered = false;
-let cron;
-let timer;
+let answered = false; // Variável para controlar se a opção já foi respondida
+let cron; // Variável para o cronômetro de perguntas
+let timer; // Variável para o timer de cada pergunta
 
 
-
+// Array de perguntas e respostas
 const questions = [
   {
     "question": "Qual dos seguintes não é um operador lógico?",
@@ -116,17 +116,7 @@ const questions = [
   // }
 ];
 
-
-// function start() {
-//     cron = setTimeout(() => {
-//         clearInterval(cron); // Interrompe o temporizador após 120 segundos
-//         finishGame(); // Chama a função para finalizar o jogo
-//     }, 120000); // 120 segundos = 120000 milissegundos
-
-//     // Chama a função time imediatamente ao iniciar o jogo
-//     time();
-// }
-
+// Função para iniciar a contagem regressiva
 function startCountdown() {
   let countdown = 3;
   countdownDiv.innerHTML = countdown;
@@ -141,28 +131,49 @@ function startCountdown() {
   }, 1000);
 }
 
+// function start() {
+//     cron = setTimeout(() => {
+//         clearInterval(cron); // Interrompe o temporizador após 120 segundos
+//         finishGame(); // Chama a função para finalizar o jogo
+//     }, 120000); // 120 segundos = 120000 milissegundos
 
+//     // Chama a função time imediatamente ao iniciar o jogo
+//     time();
+// }
+// Função para iniciar o jogo
+// Função para iniciar a contagem regressiva
+function startCountdown() {
+  let countdown = 3;
+  countdownDiv.innerHTML = countdown;
+  let countdownInterval = setInterval(() => {
+    countdown--;
+    countdownDiv.innerHTML = countdown;
+    if (countdown <= 0) {
+      clearInterval(countdownInterval);
+      countdownDiv.innerHTML = "";
+      startGame();
+    }
+  }, 1000);
+}
+
+// Iniciando o jogo com a contagem regressiva
 startCountdown();
 
-
+// Função para finalizar o jogo
 function finishGame() {
-  let questionsResult = document.getElementById("result");
-  let questionsRestart = document.getElementById("restart");
-  let home = document.getElementById("home");
+  let questionsResult = document.getElementById("result"); // Div para exibir o resultado
+  let questionsRestart = document.getElementById("restart"); // Div para exibir o resultado
   let questionPhrase = questions[currentQuestionIndex - 1];
   const totalQuestions = questions.length;
   const performance = Math.floor(totalCorrect * 100 / totalQuestions);
   questionDiv.innerHTML = "Quiz finalizado";
   questionPhrase.answers.forEach((answer, index) => {
     const optDiv = document.getElementById(`opt${index + 1}`);
-    const option = document.getElementById(`option${index + 1}`);
-    option.style.backgroundColor = "";
     optDiv.innerHTML = "";
-    optDiv.style.backgroundColor = "";
   });
   let message = "";
 
-
+  // Determinando a mensagem com base no desempenho do jogador
   switch (true) {
     case (performance >= 90):
       message = "Excelente 🎉🥳🎉";
@@ -177,7 +188,7 @@ function finishGame() {
       message = "Pode melhorar 😫";
   }
 
-
+  // Exibindo o resultado do jogo
   questionsResult.innerHTML =
     `
     <div class="text-center bg-blue-200 rounded-lg p-3">
@@ -189,7 +200,7 @@ function finishGame() {
     </div>
   `;
 
-
+  // Exibindo o bt de restart do jogo
   questionsRestart.innerHTML =
     `
     <div class="text-center restart bg-blue-200 rounded-lg p-3"> 
@@ -201,26 +212,19 @@ function finishGame() {
     </button>
     </div>
   `;
-
-  home.innerHTML = `
-  <button onclick="home()"
-  class="col-span-1 animate-bounce shadow-lg w-full shadow-blue-200 h-12 rounded-lg my-4 p-2 hover:bg-blue-200">
-  Pagina Inicial
-</button>
-  `
 }
 
-
+// Função para iniciar o jogo
 function startGame() {
   displayQuestion();
 }
 
-
+// Função para pausar o jogo
 function pause() {
   clearInterval(cron);
 }
 
-
+// Função para embaralhar um array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -229,79 +233,68 @@ function shuffleArray(array) {
   return array;
 }
 
+// Embaralhando as perguntas antes de iniciar o jogo
+questions = shuffleArray(questions);
 
-const shuffledQuestions = shuffleArray(questions);
-
-
+// Função para exibir as perguntas e opções de resposta
 function displayQuestion() {
-  if (currentQuestionIndex >= shuffledQuestions.length) {
+  if (currentQuestionIndex >= questions.length) {
     finishGame();
     pause();
     return;
   }
 
-
+  // Exibe o timer para a pergunta atual
   let timeLeft = 8;
-  timerDiv.style.backgroundColor = "rgb(191 219 254)";
   timerDiv.innerHTML = timeLeft;
-  clearInterval(timer);
+  clearInterval(timer); // Limpa o timer anterior
   timer = setInterval(() => {
     timeLeft--;
     timerDiv.innerHTML = timeLeft;
     if (timeLeft <= 0) {
       clearInterval(timer);
-      currentQuestionIndex++;
-      displayQuestion();
+      currentQuestionIndex++; // Avança para a próxima pergunta
+      displayQuestion(); // Exibe a próxima pergunta
     }
   }, 1000);
 
-  let questionPhrase = shuffledQuestions[currentQuestionIndex];
+  let questionPhrase = questions[currentQuestionIndex];
   questionDiv.innerHTML = questionPhrase.question;
   questionPhrase.answers = shuffleArray(questionPhrase.answers);
   questionPhrase.answers.forEach((answer, index) => {
     const optDiv = document.getElementById(`opt${index + 1}`);
     const option = document.getElementById(`option${index + 1}`);
     optDiv.innerHTML = answer.text;
-    option.style.backgroundColor = "";
-    optDiv.onclick = () => option(index + 1);
+    option.style.backgroundColor = ""; // Resetando a cor de fundo
+    optDiv.onclick = () => option(index + 1); // Associando a função option ao clique
   });
 
-
+  // Redefine a variável answered para false ao exibir uma nova pergunta
   answered = false;
 }
 
+// Função para selecionar a opção de resposta
 function option(opt) {
-
+  // Verifica se a opção já foi respondida
   if (answered) {
-    return;
+    return; // Sai da função se a opção já foi respondida
   }
 
-  let questionPhrase = shuffledQuestions[currentQuestionIndex];
+  let questionPhrase = questions[currentQuestionIndex];
+  let optCrt = [];
 
+  questionPhrase.answers.forEach((answer, index) => {
+    optCrt[index] = answer.correct;
+  });
 
-  let correctAnswer = questionPhrase.answers.find(answer => answer.correct);
-
-
-  let correctIndex = questionPhrase.answers.findIndex(answer => answer.correct);
-
-  const optDiv = document.getElementById(`option${opt}`);
-
-  if (optDiv) {
-
-    let selectedText = optDiv.textContent.split('-')[1].trim().toLowerCase();
-
-    let selectedLetter = selectedText.charAt(0);
-
-    if (selectedLetter === correctAnswer.text.charAt(0).toLowerCase()) {
-      totalCorrect++;
-      optDiv.style.backgroundColor = "#32CD32";
-    } else {
-      optDiv.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
-    }
-    let correctOptDiv = document.getElementById(`option${correctIndex + 1}`);
-    correctOptDiv.style.backgroundColor = "#32CD32";
-    answered = true;
+  const correctIndex = optCrt.findIndex(correct => correct); // Encontra o índice da resposta correta
+  const optDiv = document.getElementById(`option${opt}`); // Incrementando opt para corrigir o índice
+  if (opt === correctIndex + 1) { // Verifica se a opção selecionada é a correta
+    totalCorrect++;
+    optDiv.style.backgroundColor = "#32CD32"; // Verde para resposta correta
   } else {
-    console.error(`Elemento com ID 'option${opt}' não encontrado.`);
+    optDiv.style.backgroundColor = "rgba(255, 0, 0, 0.5)"; // Vermelho para resposta incorreta
   }
+
+  answered = true; // Marca a opção como respondida
 }
